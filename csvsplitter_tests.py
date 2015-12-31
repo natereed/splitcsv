@@ -26,9 +26,6 @@ class CsvSplitterTests(unittest.TestCase):
             length = 0
             for row in reader:
                 length += 1
-
-        print "--- Read %d lines" % length
-        print "--- Expected: %d" % expected_length
         if expected_length:
             self.assertEqual(expected_length, length)
         return length

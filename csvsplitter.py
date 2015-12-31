@@ -27,7 +27,6 @@ class CsvSplitter():
             self.out_file.close()
 
     def get_writer(self, chunk_num):
-        print "Chunk num %d, current_chunk %d" % (chunk_num, self.current_chunk)
         if chunk_num > self.current_chunk:
             self.close_file()
             filename = self.name_chunk(self.filename, chunk_num)
@@ -44,17 +43,14 @@ class CsvSplitter():
     def split(self):
         chunk_num = 1
         line_num = 1
-        print "Chunk size %d" % self.size
         for row in self.generate_rows_from_file(self.filename):
             self.write_row_to_chunk(row, chunk_num)
             line_num += 1
-            print "Line # %d" % line_num
             if line_num > self.size:
                 chunk_num += 1
                 line_num = 1
 
         self.close_file()
-        print "---- " + str(self.chunks)
         return self.chunks
 
 
