@@ -60,18 +60,14 @@ class CsvSplitterTests(unittest.TestCase):
                            expected_num_lines - (1 if splitter.input_header_row else 0), # num lines net input header row
                            splitter.output_header_row)
 
-    @unittest.skip("skipping")
     def test_split_file_with_file_handle(self):
         self.generate_example(8, 11)
-        self.run_test_with_splitter(CsvSplitter("example.csv", 5, StringIO.StringIO(self.example), input_header_row=True),
-                                    True)
+        self.run_test_with_splitter(CsvSplitter("example.csv", 5, StringIO.StringIO(self.example), input_header_row=True))
 
-    @unittest.skip("skipping")
     def test_split_file_with_filename(self):
         self.generate_example(8,11, persist=True)
         self.run_test_with_splitter(CsvSplitter("example.csv", 5, input_header_row=True))
 
-    @unittest.skip("skipping")
     def test_split_file_with_header_row_output_header_row(self):
         self.generate_example(8,11, persist=True)
         self.run_test_with_splitter(CsvSplitter("example.csv", 5, output_header_row=True, input_header_row=True))
