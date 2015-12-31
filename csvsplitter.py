@@ -2,8 +2,8 @@ import csv
 import os
 
 class CsvSplitter():
-    def __init__(self, filename, size, in_file=None):
-        self.size = size
+    def __init__(self, filename, chunk_size, in_file=None):
+        self.chunk_size = chunk_size
         self.filename = filename
         self.in_file = in_file
         self.chunks = []
@@ -46,7 +46,7 @@ class CsvSplitter():
         for row in self.generate_rows_from_file(self.filename):
             self.write_row_to_chunk(row, chunk_num)
             line_num += 1
-            if line_num > self.size:
+            if line_num > self.chunk_size:
                 chunk_num += 1
                 line_num = 1
 

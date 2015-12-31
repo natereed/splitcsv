@@ -31,22 +31,32 @@ class CsvSplitterTests(unittest.TestCase):
         return length
 
 
-    def verify_chunks(self, chunks, size, expected_num_lines):
+    def verify_chunks(self, chunks, chunk_size, expected_num_lines):
         num_verified_lines = 0
         for chunk in chunks[:-1]:
-            num_verified_lines += self.verify_chunk_size(chunk, 5)
+            num_verified_lines += self.verify_chunk_size(chunk, chunk_size)
         self.assertEqual(expected_num_lines - num_verified_lines,
                          self.verify_chunk_size(chunks[-1], expected_num_lines % num_verified_lines))
 
-    def test_split_file_with_file_handle(self):
-        num_verified_lines = 0
-        expected_num_lines = len(self.example_file.strip().split("\n"))
 
-        splitter = CsvSplitter("example.csv", 5, StringIO.StringIO(self.example_file))
+    def run_test_with_splitter(self, splitter):
+        expected_num_lines = len(self.example_file.strip().split("\n"))
         chunks = splitter.split()
         self.assertTrue(chunks and len(chunks) == 3)
-        self.verify_chunks(chunks, 5, expected_num_lines)
+        self.verify_chunks(chunks, splitter.chunk_size, expected_num_lines)
 
+    def test_split_file_with_file_handle(self):
+        self.run_test_with_splitter(CsvSplitter("example.csv", 5, StringIO.StringIO(self.example_file)))
+
+    def test_split_file_with_filename(self):
+        self.run_test_with_splitter(CsvSplitter("example.csv", 5, "example.csv"))
+
+    def test_split_file_ignore_header_row(self):
+        pass
+
+    def test_split_file_output_header_rows(self):
+        pass
+    
 if __name__ == '__main__':
     unittest.main()
 
