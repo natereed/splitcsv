@@ -1,4 +1,5 @@
 import csv
+import os
 import StringIO
 import unittest
 
@@ -6,7 +7,15 @@ from csvsplitter import CsvSplitter
 
 class CsvSplitterTests(unittest.TestCase):
 
+    def tearDown(self):
+        if self.persist_example:
+            os.remove("example.csv")
+        os.remove("example_chunk1.csv")
+        os.remove("example_chunk2.csv")
+        os.remove("example_chunk3.csv")
+
     def generate_example(self, num_cols, num_rows, include_header_row=True, persist=False):
+        self.persist_example = persist
         example = ""
         if include_header_row:
             example += ','.join(["col %d" % i for i in range(num_cols)])
