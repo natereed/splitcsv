@@ -11,6 +11,7 @@ class CsvSplitter():
         self.current_chunk = 0
         self.out_file = None
         self.output_header_row = output_header_row
+        #print self.output_header_row
         self.input_header_row = input_header_row
 
     def generate_rows_from_file(self, filename):

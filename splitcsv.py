@@ -24,9 +24,11 @@ if __name__ == "__main__":
     header_opts = {'output_header_row' : args.output_header_row,
                    'input_header_row' : args.input_header_row}
 
+    print header_opts
+
     chunks = CsvSplitter(args.path,
                          size,
-                         output_header_row=args.input_header_row,
+                         output_header_row=args.output_header_row,
                          input_header_row=args.input_header_row).split()
     print "Created %d chunks." % len(chunks)
 
